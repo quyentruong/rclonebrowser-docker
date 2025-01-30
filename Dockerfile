@@ -8,7 +8,7 @@ FROM --platform=$BUILDPLATFORM jlesage/baseimage-gui:alpine-3.12-glibc
 ARG RCLONE_VERSION=current
 
 # Define environment variables
-ENV ARCH=amd64
+ENV ARCH=arm64
 
 # Define working directory.
 WORKDIR /tmp
