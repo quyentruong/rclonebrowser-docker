@@ -20,7 +20,7 @@ docker run -d --name=rclonebrowser \
 ghcr.io/ahbanavi/rclonebrowser-docker:latest
 ```
 
-For more info, check the base repos: [romancin/rclonebrowser-docker](https://github.com/romancin/rclonebrowser-docker).
+For more info, check the base repo: [romancin/rclonebrowser-docker](https://github.com/romancin/rclonebrowser-docker).
 
 ## Features
 - Multi-architecture support (amd64, arm64)
