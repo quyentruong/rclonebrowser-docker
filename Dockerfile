@@ -2,7 +2,7 @@
 # RcloneBrowser Dockerfile
 #
 
-FROM --platform=$BUILDPLATFORM jlesage/baseimage-gui:alpine-3.12-glibc 
+FROM --platform=$BUILDPLATFORM jlesage/baseimage-gui:alpine-3.20-v4
 
 # Define build arguments
 ARG RCLONE_VERSION=current
@@ -30,7 +30,6 @@ RUN apk --no-cache add \
     && unzip /tmp/rclone-${RCLONE_VERSION}-linux-${ARCH}.zip \
     && mv /tmp/rclone-*-linux-${ARCH}/rclone /usr/bin \
     && rm -r /tmp/rclone* && \
-
     apk add --no-cache --virtual=build-dependencies \
         build-base \
         cmake \
@@ -38,24 +37,23 @@ RUN apk --no-cache add \
         gcc \
         git \
         qt5-qtbase qt5-qtmultimedia-dev qt5-qttools-dev && \
-
 # Compile RcloneBrowser
     git clone https://github.com/kapitainsky/RcloneBrowser.git /tmp && \
     mkdir /tmp/build && \
     cd /tmp/build && \
-    cmake .. && \
+    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" .. && \
     cmake --build . && \
     ls -l /tmp/build && \
     cp /tmp/build/build/rclone-browser /usr/bin  && \
-
     # cleanup
      apk del --purge build-dependencies && \
     rm -rf /tmp/*
 
 # Maximize only the main/initial window.
 RUN \
-    sed-patch 's/<application type="normal">/<application type="normal" title="Rclone Browser">/' \
-        /etc/xdg/openbox/rc.xml
+    mkdir -p /etc/openbox && \
+    echo '<Type>normal</Type>' > /etc/openbox/main-window-selection.xml && \
+    echo '<Name>Rclone Browser</Name>' >> /etc/openbox/main-window-selection.xml
 
 # Generate and install favicons.
 RUN \
