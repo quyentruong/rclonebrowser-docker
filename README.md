@@ -1,4 +1,4 @@
-# rclonebrowser-docker
+# rclonebrowser-docker (arm64)
 
 **Note: This is a fork that builds the image only for arm64.**
 
