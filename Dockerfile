@@ -6,9 +6,7 @@ FROM --platform=$BUILDPLATFORM jlesage/baseimage-gui:alpine-3.20-v4
 
 # Define build arguments
 ARG RCLONE_VERSION=current
-
-# Define environment variables
-ENV ARCH=arm64
+ARG TARGETARCH
 
 # Define working directory.
 WORKDIR /tmp
@@ -26,9 +24,9 @@ RUN apk --no-cache add \
       dbus \
       xterm \
     && cd /tmp \
-    && wget -q http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${ARCH}.zip \
-    && unzip /tmp/rclone-${RCLONE_VERSION}-linux-${ARCH}.zip \
-    && mv /tmp/rclone-*-linux-${ARCH}/rclone /usr/bin \
+    && wget -q http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
+    && unzip /tmp/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
+    && mv /tmp/rclone-*-linux-${TARGETARCH}/rclone /usr/bin \
     && rm -r /tmp/rclone* && \
     apk add --no-cache --virtual=build-dependencies \
         build-base \
@@ -57,7 +55,6 @@ RUN \
 
 # Add files.
 COPY rootfs/ /
-COPY VERSION /
 
 RUN chmod +x /startapp.sh 
 RUN chmod +x /etc/cont-init.d/rclonebrowser.sh
@@ -76,7 +73,6 @@ VOLUME ["/media"]
 LABEL \
       org.label-schema.name="rclonebrowser" \
       org.label-schema.description="arm64 Docker container for RcloneBrowser" \
-      org.label-schema.version="unknown" \
       org.label-schema.vcs-url="https://github.com/ahbanavi/rclonebrowser-docker" \
       org.label-schema.schema-version="1.0"
 
