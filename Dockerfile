@@ -2,7 +2,7 @@
 # RcloneBrowser Dockerfile
 #
 
-FROM --platform=$BUILDPLATFORM jlesage/baseimage-gui:alpine-3.20-v4
+FROM --platform=$BUILDPLATFORM jlesage/baseimage-gui:alpine-3.15-v4
 
 # Define build arguments
 ARG RCLONE_VERSION=current
@@ -51,9 +51,9 @@ RUN apk --no-cache add \
 
 # Maximize only the main/initial window.
 RUN \
-    mkdir -p /etc/openbox && \
-    echo '<Type>normal</Type>' > /etc/openbox/main-window-selection.xml && \
-    echo '<Name>Rclone Browser</Name>' >> /etc/openbox/main-window-selection.xml
+    sed-patch 's/<application type="normal">/<application type="normal" title="Rclone Browser">/' \
+        /etc/xdg/openbox/rc.xml
+
 
 # Generate and install favicons.
 RUN \
@@ -63,6 +63,11 @@ RUN \
 # Add files.
 COPY rootfs/ /
 COPY VERSION /
+
+RUN chmod +x /startapp.sh 
+RUN chmod +x /etc/cont-init.d/rclonebrowser.sh
+
+# RUN mkdir -p /config/logs
 
 # Set environment variables.
 ENV APP_NAME="RcloneBrowser" \
@@ -79,3 +84,4 @@ LABEL \
       org.label-schema.version="unknown" \
       org.label-schema.vcs-url="https://github.com/romancin/rclonebrowser-docker" \
       org.label-schema.schema-version="1.0"
+
