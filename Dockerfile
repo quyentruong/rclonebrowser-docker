@@ -72,7 +72,7 @@ VOLUME ["/media"]
 # Metadata.
 LABEL \
       org.label-schema.name="rclonebrowser" \
-      org.label-schema.description="arm64 Docker container for RcloneBrowser" \
+      org.label-schema.description="Docker container for RcloneBrowser" \
       org.label-schema.vcs-url="https://github.com/ahbanavi/rclonebrowser-docker" \
       org.label-schema.schema-version="1.0"
 
