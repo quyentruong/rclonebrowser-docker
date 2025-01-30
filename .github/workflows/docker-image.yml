@@ -6,6 +6,12 @@ on:
   schedule:
     - cron: '0 0 * * 0'  # Run weekly at midnight UTC on Sundays
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force build even if version exists'
+        required: false
+        default: false
+        type: boolean
 
 env:
   REGISTRY: ghcr.io
@@ -37,7 +43,7 @@ jobs:
           fi
 
       - name: Log in to the Container registry
-        if: steps.rclone_version.outputs.exists == 'false'
+        if: steps.rclone_version.outputs.exists == 'false' || inputs.force == true
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -51,15 +57,15 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Set up QEMU
-        if: steps.rclone_version.outputs.exists == 'false'
+        if: steps.rclone_version.outputs.exists == 'false' || inputs.force == true
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        if: steps.rclone_version.outputs.exists == 'false'
+        if: steps.rclone_version.outputs.exists == 'false' || inputs.force == true
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
-        if: steps.rclone_version.outputs.exists == 'false'
+        if: steps.rclone_version.outputs.exists == 'false' || inputs.force == true
         id: push
         uses: docker/build-push-action@v6
         with:
@@ -74,7 +80,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
       - name: Generate artifact attestation
-        if: steps.rclone_version.outputs.exists == 'false'
+        if: steps.rclone_version.outputs.exists == 'false' || inputs.force == true
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
