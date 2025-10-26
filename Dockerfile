@@ -36,7 +36,7 @@ RUN apk --no-cache add \
         git \
         qt5-qtbase qt5-qtmultimedia-dev qt5-qttools-dev && \
 # Compile RcloneBrowser
-    git clone https://github.com/kapitainsky/RcloneBrowser.git /tmp && \
+    git clone https://github.com/JanHellwig/RcloneBrowser.git /tmp && \
     mkdir /tmp/build && \
     cd /tmp/build && \
     cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" .. && \
