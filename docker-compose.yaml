@@ -1,6 +1,6 @@
 services:
   rclonebrowser_service:
-    image: ghcr.io/ahbanavi/rclonebrowser-docker:latest
+    image: ghcr.io/quyentruong/rclonebrowser-docker:latest
     container_name: rclonebrowser
     ports:
       - "5804:5800"
