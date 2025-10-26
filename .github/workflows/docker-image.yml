@@ -75,6 +75,7 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.rclone_version.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.build_time.outputs.timestamp }}
           labels: |
             org.opencontainers.image.version=${{ steps.rclone_version.outputs.version }}
           platforms: linux/amd64,linux/arm64
