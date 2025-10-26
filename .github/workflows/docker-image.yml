@@ -4,7 +4,7 @@ on:
   release:
     types: [published]
   schedule:
-    - cron: '0 0 * * 0'  # Run weekly at midnight UTC on Sundays
+    - cron: '0 0 1 * 0'  # Run monthly at midnight UTC on Sundays
   workflow_dispatch:
     inputs:
       force:
