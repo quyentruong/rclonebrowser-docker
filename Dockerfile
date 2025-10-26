@@ -17,35 +17,32 @@ RUN apk --no-cache add \
       ca-certificates \
       fuse \
       wget \
+      unzip \
       qt5-qtbase \
       qt5-qtbase-x11 \
       libstdc++ \
       libgcc \
       dbus \
       xterm \
-    && cd /tmp \
-    && wget -q http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
-    && unzip /tmp/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
-    && mv /tmp/rclone-*-linux-${TARGETARCH}/rclone /usr/bin \
-    && rm -r /tmp/rclone* && \
-    apk add --no-cache --virtual=build-dependencies \
+    && wget -q http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip -O /tmp/rclone.zip \
+    && unzip /tmp/rclone.zip -d /tmp/rclone \
+    && mv /tmp/rclone/rclone-*-linux-${TARGETARCH}/rclone /usr/bin \
+    && rm -r /tmp/rclone /tmp/rclone.zip \
+    && apk add --no-cache --virtual=build-dependencies \
         build-base \
         cmake \
         make \
         gcc \
         git \
-        qt5-qtbase qt5-qtmultimedia-dev qt5-qttools-dev && \
-# Compile RcloneBrowser
-    git clone https://github.com/JanHellwig/RcloneBrowser.git /tmp && \
-    mkdir /tmp/build && \
-    cd /tmp/build && \
-    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" .. && \
-    cmake --build . && \
-    ls -l /tmp/build && \
-    cp /tmp/build/build/rclone-browser /usr/bin  && \
-    # cleanup
-     apk del --purge build-dependencies && \
-    rm -rf /tmp/*
+        qt5-qtbase qt5-qtmultimedia-dev qt5-qttools-dev \
+    && git clone https://github.com/JanHellwig/RcloneBrowser.git /tmp/RcloneBrowser \
+    && mkdir /tmp/build \
+    && cd /tmp/build \
+    && cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" ../RcloneBrowser \
+    && cmake --build . \
+    && cp /tmp/build/rclone-browser /usr/bin \
+    && apk del --purge build-dependencies \
+    && rm -rf /tmp/*
 
 # Generate and install favicons.
 RUN \
