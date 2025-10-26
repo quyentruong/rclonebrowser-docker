@@ -2,7 +2,7 @@
 # RcloneBrowser Dockerfile
 #
 
-FROM jlesage/baseimage-gui:alpine-3.20-v4
+FROM jlesage/baseimage-gui:alpine-3.22-v4
 
 # Define build arguments
 ARG RCLONE_VERSION=current
@@ -47,7 +47,6 @@ RUN apk --no-cache add \
      apk del --purge build-dependencies && \
     rm -rf /tmp/*
 
-
 # Generate and install favicons.
 RUN \
     APP_ICON_URL=https://github.com/rclone/rclone/raw/master/graphics/logo/logo_symbol/logo_symbol_color_512px.png && \
@@ -58,7 +57,6 @@ COPY rootfs/ /
 
 RUN chmod +x /startapp.sh 
 RUN chmod +x /etc/cont-init.d/rclonebrowser.sh
-
 
 # Set environment variables.
 ENV APP_NAME="RcloneBrowser" \
@@ -73,6 +71,5 @@ VOLUME ["/media"]
 LABEL \
       org.label-schema.name="rclonebrowser" \
       org.label-schema.description="Docker container for RcloneBrowser" \
-      org.label-schema.vcs-url="https://github.com/ahbanavi/rclonebrowser-docker" \
+      org.label-schema.vcs-url="https://github.com/quyentruong/rclonebrowser-docker" \
       org.label-schema.schema-version="1.0"
-
