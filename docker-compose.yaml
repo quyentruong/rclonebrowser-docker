@@ -7,7 +7,9 @@ services:
     environment:
       - USER_ID=0
       - GROUP_ID=0
-      - TZ=Europe/Madrid
+      - TZ=America/Los_Angeles
+      - KEEP_APP_RUNNING=1
+      - SECURE_CONNECTION=1
       - VNC_PASSWORD=password
     volumes:
       - "/share/Container/rclonebrowser:/config:rw"

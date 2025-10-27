@@ -6,7 +6,7 @@ Docker container for RcloneBrowser supporting both amd64 and arm64 architectures
 
 Latest Image:
 ```bash
-docker pull ghcr.io/ahbanavi/rclonebrowser-docker:latest
+docker pull ghcr.io/quyentruong/rclonebrowser-docker:latest
 ```
 
 Quick Start:
@@ -17,12 +17,14 @@ docker run -d --name=rclonebrowser \
 -e GROUP_ID=0 -e USER_ID=0 -e TZ=UTC \
 -p 5800:5800 \
 -p 5900:5900 \
-ghcr.io/ahbanavi/rclonebrowser-docker:latest
+ghcr.io/quyentruong/rclonebrowser-docker:latest
 ```
 
 For more info, check the base repo: [romancin/rclonebrowser-docker](https://github.com/romancin/rclonebrowser-docker).
 
 ## Features
-- Multi-architecture support (amd64, arm64)
-- Automated weekly builds (if new rclone version is available)
-- Images are tagged with both `latest` and the specific rclone version
+
+- **Multi-architecture support:** Runs on both `amd64` and `arm64`.
+- **Automated monthly builds:** Automatically rebuilt each month if a new rclone version is available.
+- **Versioned images:** Images are tagged with both `latest` and the specific rclone version.
+- **Bug fixes:** Incorporates [this fix](https://github.com/JanHellwig/RcloneBrowser/commit/639e077ae8f7b50e739f8ec32e1810cdebe18b52) from JanHellwig/RcloneBrowser.
