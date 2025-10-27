@@ -5,7 +5,7 @@
 FROM jlesage/baseimage-gui:alpine-3.22-v4
 
 # Define build arguments
-ARG RCLONE_VERSION=current
+ARG RCLONE_VERSION
 ARG TARGETARCH
 
 # Define working directory.

@@ -77,9 +77,11 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.rclone_version.outputs.version }}
           labels: |
             org.opencontainers.image.version=${{ steps.rclone_version.outputs.version }}
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            RCLONE_VERSION=${{ steps.rclone_version.outputs.version }}
 
       - name: Generate artifact attestation
         if: steps.rclone_version.outputs.exists == 'false' || inputs.force == true
