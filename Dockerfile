@@ -5,7 +5,7 @@
 FROM jlesage/baseimage-gui:alpine-3.22-v4
 
 # Define build arguments
-ARG RCLONE_VERSION
+ARG RCLONE_VERSION=current
 ARG TARGETARCH
 
 # Define working directory.
@@ -24,7 +24,7 @@ RUN apk --no-cache add \
       dbus \
       xterm \
     && cd /tmp \
-    && wget -q https://downloads.rclone.org/${RCLONE_VERSION}/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
+    && wget -q https://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
     && unzip /tmp/rclone-${RCLONE_VERSION}-linux-${TARGETARCH}.zip \
     && mv /tmp/rclone-*-linux-${TARGETARCH}/rclone /usr/bin \
     && rm -r /tmp/rclone* && \
