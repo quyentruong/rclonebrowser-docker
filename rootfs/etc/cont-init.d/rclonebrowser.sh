@@ -1,27 +1,21 @@
 #!/bin/sh
 
-set -e # Exit immediately if a command exits with a non-zero status.
-set -u # Treat unset variables as an error.
+set -e # Dừng nếu có lỗi
 
-log() {
-    echo "[cont-init.d] $(basename $0): $*"
-}
+# 1. Đảm bảo các thư mục cần thiết tồn tại
+mkdir -p /config/.config/rclone
+mkdir -p /media
+mkdir -p /downloads
 
-# Make sure mandatory directories exist.
-mkdir -p /config/logs
+# 2. Đồng bộ quyền sở hữu (ownership) theo USER_ID và GROUP_ID
+# Hàm take-ownership được tích hợp sẵn trong jlesage/baseimage-gui
+take-ownership /config
+take-ownership /downloads
 
-# Take ownership of the config directory content.
-chown -R $USER_ID:$GROUP_ID /config/*
+# 3. Phân quyền truy cập thư mục (tùy chọn)
+chmod -R 775 /downloads
 
-# Take ownership of the output directory.
-#if ! chown $USER_ID:$GROUP_ID /output; then
-    # Failed to take ownership of /output.  This could happen when,
-    # for example, the folder is mapped to a network share.
-    # Continue if we have write permission, else fail.
-#    if s6-setuidgid $USER_ID:$GROUP_ID [ ! -w /output ]; then
-#        log "ERROR: Failed to take ownership and no write permission on /output."
-#        exit 1
-#    fi
-#fi
-
-# vim: set ft=sh :
+# Nếu có file rclone.conf sẵn, bảo đảm quyền đọc/ghi
+if [ -f /config/.config/rclone/rclone.conf ]; then
+    chmod 600 /config/.config/rclone/rclone.conf
+fi
