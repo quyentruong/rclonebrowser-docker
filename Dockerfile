@@ -36,7 +36,7 @@ RUN apk --no-cache add \
         git \
         qt5-qtbase qt5-qtmultimedia-dev qt5-qttools-dev && \
 # Compile RcloneBrowser
-    git clone https://github.com/quyentruong/RcloneBrowser.git /tmp && \
+    git clone --depth 1 -b qt5-legacy https://github.com/quyentruong/RcloneBrowser.git /tmp && \
     mkdir /tmp/build && \
     cd /tmp/build && \
     cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" .. && \
@@ -59,7 +59,7 @@ RUN chmod +x /startapp.sh
 RUN chmod +x /etc/cont-init.d/rclonebrowser.sh
 
 # Set environment variables.
-ENV APP_NAME="RcloneBrowser" \
+ENV APP_NAME="Rclone Browser Qt5" \
     SERVICES_GRACETIME=8000 \
     ENABLE_CJK_FONT=1
 
