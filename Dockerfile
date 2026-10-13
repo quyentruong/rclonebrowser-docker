@@ -12,7 +12,7 @@ RUN apk add --no-cache \
     qt6-qtsvg-dev
 
 WORKDIR /tmp
-RUN git clone --depth 1 https://github.com/Alkl58/RcloneBrowser.git /tmp/RcloneBrowser
+RUN git clone --depth 1 https://github.com/quyentruong/RcloneBrowser.git /tmp/RcloneBrowser
 
 WORKDIR /tmp/RcloneBrowser/build
 RUN cmake -DCMAKE_BUILD_TYPE=Release .. && \
@@ -26,7 +26,7 @@ FROM jlesage/baseimage-gui:alpine-3.24-v4
 
 ARG TARGETARCH
 
-RUN set-cont-env APP_NAME "Rclone Browser QT"
+RUN set-cont-env APP_NAME "Rclone Browser Qt6"
 
 # 1. Cài các thư viện Qt6, font và công cụ cần thiết (curl, unzip, ca-certificates)
 RUN add-pkg \
