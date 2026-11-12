@@ -13,7 +13,7 @@ Quick Start:
 ```bash
 docker run -d --name=rclonebrowser \
 -v /srv/rclone/config:/config \
--v /srv/rclone/media:/media \
+-v /srv/rclone/shared:/shared \
 -e GROUP_ID=0 -e USER_ID=0 -e TZ=UTC \
 -p 5800:5800 \
 -p 5900:5900 \

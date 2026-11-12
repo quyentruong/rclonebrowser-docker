@@ -63,6 +63,3 @@ RUN chmod +x /startapp.sh
 COPY rootfs/ /
 RUN chmod -R +x /etc/cont-init.d/
 
-VOLUME ["/config"]
-VOLUME ["/media"]
-VOLUME ["/downloads"]
